@@ -37,6 +37,10 @@ contract Auction is ReentrancyGuard{
         require(block.timestamp>=timeend,"still going on");// abhi ka time bada hai > khatam hone ke time se (time khatam auction ka)
         _;
     }
+modifier onlyWhitelisted() {
+  require(bytes(bidderInfo[msg.sender].name).length != 0, "Not whitelisted");
+  _;
+}
     function addbidder(string memory _name, uint _id) public  onlyOwner{
         bidders.push(bidder(_name,_id));
                 bidderInfo[msg.sender] = bidder(_name, _id);
@@ -44,7 +48,7 @@ contract Auction is ReentrancyGuard{
 
 
     }
-    function bid() public payable AuctionTime{
+    function bid() public payable AuctionTime onlyWhitelisted{
         require(msg.value > highestbid, "There already is a higher bid");
 
         if (highestbid != 0) {
