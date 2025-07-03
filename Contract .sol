@@ -29,12 +29,12 @@ contract Auction is ReentrancyGuard{
         _;
     }
     modifier AuctionTime(){
-        require(block.timestamp<timeend,"ended");          // abki ka time< khatam hone ke time se(time hai khatam hone mein)
+        require(block.timestamp<timeend,"ended");         
 
         _;
     }
     modifier Endtime(){
-        require(block.timestamp>=timeend,"still going on");// abhi ka time bada hai > khatam hone ke time se (time khatam auction ka)
+        require(block.timestamp>=timeend,"still going on");
         _;
     }
 modifier onlyWhitelisted() {
@@ -79,7 +79,10 @@ modifier onlyWhitelisted() {
         bidder memory Bidder = bidderInfo[_bidder];
         return (Bidder.name, Bidder.id);
     }
+//   function timeLeft() public view returns(uint) {
+ // return timeend > block.timestamp ? timeend - block.timestamp : 0;
+//}
+
     }
-    // can extend time of auction here// new feature
-    // can let people know of endin the auction //new feature
+
 
